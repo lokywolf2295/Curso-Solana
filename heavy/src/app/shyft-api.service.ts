@@ -5,10 +5,10 @@ import {map, of} from 'rxjs';
 @Injectable({ providedIn: 'root'})
 export class ShyftApiService {
     private readonly _httpClient = inject(HttpClient);
-    private readonly _headers = {'x-api-key': 'my-api-key'};
+    private readonly _header = {'x-api-key': 'my-api-key'};
     private readonly _mint = '7VcnUPSoYq9bcfCUhsxdVPdKEnkw8Rkf7Qc6BMcyg4JB';
 
-    getAccount(publicKey: string | null | undefined) {
+    getAccount({ publicKey }: { publicKey: string | null | undefined; }) {
         if (!publicKey) {
             return of(null);
         }
@@ -20,7 +20,7 @@ export class ShyftApiService {
         
         return this._httpClient.get<{ 
             result: { balance: number; info: { image: string}};
-        }>(url.toString(), {headers: this._headers})
+        }>(url.toString(), {headers: this._header})
             .pipe(map((response) => response.result));
     }
 }
