@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { HeroSectionComponent } from './hero-section-component';
+import { FeaturesSectionComponent } from './features-section-component';
 
 @Component({
     selector: 'heavy-home-page',
     template: `
-        <h2>Home</h2>
+        <heavy-hero-section></heavy-hero-section>
+        <heavy-features-section></heavy-features-section>
     `,
     standalone: true,
+
+    imports: [HeroSectionComponent, FeaturesSectionComponent]
 })
 
 export class HomePageComponent {}
