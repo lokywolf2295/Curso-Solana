@@ -17,7 +17,7 @@ import { MatAnchor } from '@angular/material/button';
     MatAnchor,
     HdWalletMultiButtonComponent,
   ],
-  selector: 'bob-root',
+  selector: 'heavy-root',
   template: `
     <header class="px-16 pt-20 pb-8 relative">
       <h1 class="text-center text-5xl mb-4">My Bank</h1>
@@ -46,7 +46,7 @@ export class AppComponent {
   private readonly _publiKey = toSignal(this._walletStore.publicKey$);
 
   readonly account = computedAsync(
-    () => this._shiftApiService.getAccount(this._publiKey()?.toBase58()),
+    () => this._shiftApiService.getAccount({ publicKey: this._publiKey()?.toBase58() }),
     { requireSync: true },
   );
 }
