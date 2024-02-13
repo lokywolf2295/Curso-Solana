@@ -7,6 +7,7 @@ export class ShyftApiService {
     private readonly _httpClient = inject(HttpClient);
     private readonly _header = {'x-api-key': 'my-api-key'};
     private readonly _mint = '7VcnUPSoYq9bcfCUhsxdVPdKEnkw8Rkf7Qc6BMcyg4JB';
+    /*private readonly _mint = '7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs';*//*Dirección de prueba del token Silly Dragon*/
 
     getAccount({ publicKey }: { publicKey: string | null | undefined; }) {
         if (!publicKey) {
