@@ -27,7 +27,7 @@ import { MatAnchor } from '@angular/material/button';
 
       @if (balance()) {
         <div class="flex justify-center items-center gap-2 absolute top-4 left-4">
-          <img src="https://solscan.io/static/media/solana-sol-logo.b612f1402147c92338bed5af1879b175.svg" class="w-8 h-8"/>
+          <img src="https://arweave.net/Lgh2BpFAvQ2rByzJAGh_MJn5eV3FbavDotMJiQz67UY" class="w-8 h-8"/>
           <p class="font-bold">{{ balance()?.balance }}</p>
         </div>
       }
