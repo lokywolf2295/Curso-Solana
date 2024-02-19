@@ -2,9 +2,8 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { HdWalletMultiButtonComponent } from '@heavy-duty/wallet-adapter-material';
 import { ShyftApiService } from './shyft-api.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { injectPublicKey } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
-import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { DecimalPipe } from '@angular/common';
 import { MatAnchor } from '@angular/material/button';
 
@@ -25,13 +24,11 @@ import { MatAnchor } from '@angular/material/button';
       <div class="flex justify-center mb-4">
         <hd-wallet-multi-button></hd-wallet-multi-button>
       </div>
-      
-      @if (account()) {
-        <div class="absolute top-4 left-4 flex items-center grap-2">
-          <img [src]="account()?.info?.image" class="w-8 h-8" alt="Coin" />
-          <p class="text-2xl font-bold">
-            {{ account()?.balance | number }}
-          </p>
+
+      @if (balance()) {
+        <div class="flex justify-center items-center gap-2 absolute top-4 left-4">
+          <img src="https://solscan.io/static/media/solana-sol-logo.b612f1402147c92338bed5af1879b175.svg" class="w-8 h-8"/>
+          <p class="font-bold">{{ balance()?.balance }}</p>
         </div>
       }
 
@@ -42,6 +39,9 @@ import { MatAnchor } from '@angular/material/button';
           </li>
           <li>
             <a [routerLink]="['settings']" mat-raised-button>Settings</a>
+          </li>
+          <li>
+            <a [routerLink]="['transactions']" mat-raised-button>Transactions</a>
           </li>
         </ul>
       </nav>
@@ -54,14 +54,9 @@ import { MatAnchor } from '@angular/material/button';
 })
 export class AppComponent {
   private readonly _shiftApiService = inject(ShyftApiService);
-  private readonly _walletStore = inject(WalletStore);
-  private readonly _publicKey = toSignal(this._walletStore.publicKey$);
+  private readonly _publicKey = injectPublicKey();
 
-  readonly account = computedAsync(
-    () =>
-      this._shiftApiService.getAccount({
-        publicKey: this._publicKey()?.toBase58(),
-      }),
-    { requireSync: true },
+  readonly balance = computedAsync(() =>
+    this._shiftApiService.getBalance(this._publicKey()?.toBase58()),
   );
 }
