@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HeroSectionComponent } from './hero-section-component';
 import { FeaturesSectionComponent } from './features-section-component';
+import { TransactionsSectionComponent } from './transaction-section.component';
 
 @Component({
     selector: 'heavy-home-page',
@@ -10,7 +11,7 @@ import { FeaturesSectionComponent } from './features-section-component';
     `,
     standalone: true,
 
-    imports: [HeroSectionComponent, FeaturesSectionComponent]
+    imports: [HeroSectionComponent, FeaturesSectionComponent, TransactionsSectionComponent]
 })
 
 export class HomePageComponent {}
