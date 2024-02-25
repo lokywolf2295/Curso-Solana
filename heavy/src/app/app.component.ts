@@ -6,6 +6,8 @@ import { injectPublicKey } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
 import { DecimalPipe } from '@angular/common';
 import { MatAnchor } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { TransferModalComponent } from './transfer-modal.component';
 
 @Component({
   standalone: true,
@@ -47,6 +49,8 @@ import { MatAnchor } from '@angular/material/button';
       </nav>
     </header>
 
+    <button (click)="onTransfer()">Transferir</button>
+
     <main>
       <router-outlet></router-outlet>
     </main>
@@ -55,8 +59,14 @@ import { MatAnchor } from '@angular/material/button';
 export class AppComponent {
   private readonly _shiftApiService = inject(ShyftApiService);
   private readonly _publicKey = injectPublicKey();
+  private readonly _matDialog = inject(MatDialog);
 
   readonly balance = computedAsync(() =>
     this._shiftApiService.getBalance(this._publicKey()?.toBase58()),
   );
+
+  onTransfer() {
+    console.log('Transfer funds');
+    this._matDialog.open(TransferModalComponent);
+  }
 }
