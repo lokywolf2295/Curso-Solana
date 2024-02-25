@@ -28,7 +28,7 @@ export interface TransferFormPayload {
           matInput
           type="text"
           placeholder="Ejemplo: Pagar el recibo de electricidad."
-          [ngModel]="model.memo"
+          [(ngModel)]="model.memo"
           required
           #memoControl="ngModel"
         />
@@ -53,7 +53,7 @@ export interface TransferFormPayload {
           type="number"
           min="0"
           placeholder="Ingresa el Monto a transferir"
-          [ngModel]="model.amount"
+          [(ngModel)]="model.amount"
           required
           #amountControl="ngModel"
         />
@@ -79,7 +79,7 @@ export interface TransferFormPayload {
           matInput
           type="text"
           placeholder="Public Key de la wallet del destinatario"
-          [ngModel]="model.recieverAddress"
+          [(ngModel)]="model.recieverAddress"
           required
           #recieverAddress="ngModel"
         />

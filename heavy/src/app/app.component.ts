@@ -66,7 +66,6 @@ export class AppComponent {
   );
 
   onTransfer() {
-    console.log('Transfer funds');
     this._matDialog.open(TransferModalComponent);
   }
 }
