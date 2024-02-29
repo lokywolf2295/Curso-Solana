@@ -5,7 +5,7 @@ import { map, of, tap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ShyftApiService {
   private readonly _httpClient = inject(HttpClient);
-  private readonly _key = 'my-api-key';
+  private readonly _key = '2XQ90Z1OgK2oK3jZ';
   private readonly _header = { 'x-api-key': this._key };
   private readonly _mint ='7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs'; /*Dirección de prueba del token Silly Dragon*/
 
