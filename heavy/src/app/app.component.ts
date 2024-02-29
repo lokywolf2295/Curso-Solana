@@ -54,16 +54,25 @@ import { TransferModalComponent } from './transfer-modal.component';
     </main>
   `,
 })
-export class AppComponent implements OnInit{
-  private readonly _shiftApiService = inject(ShyftApiService);
+export class AppComponent implements OnInit {
+  private readonly _shyftApiService = inject(ShyftApiService);
   private readonly _publicKey = injectPublicKey();
+  private readonly _matDialog = inject(MatDialog);
   private readonly _connectionStore = inject(ConnectionStore);
 
   readonly balance = computedAsync(() =>
-    this._shiftApiService.getBalance(this._publicKey()?.toBase58()),
+    this._shyftApiService.getBalance(this._publicKey()?.toBase58()),
   );
 
   ngOnInit() {
-    this._connectionStore.setEndpoint(this._shiftApiService.getEndpoint());
+    const url = new URL('https://rpc.shyft.to');
+
+    url.searchParams.set('api_key', 'my-api-key');
+
+    this._connectionStore.setEndpoint(url.toString());
+  }
+
+  onTransfer() {
+    this._matDialog.open(TransferModalComponent);
   }
 }
