@@ -1,11 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { HdWalletMultiButtonComponent } from '@heavy-duty/wallet-adapter-material';
 import { ShyftApiService } from './shyft-api.service';
-import { injectPublicKey } from '@heavy-duty/wallet-adapter';
+import { ConnectionStore, injectPublicKey } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
 import { DecimalPipe } from '@angular/common';
 import { MatAnchor } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { TransferModalComponent } from './transfer-modal.component';
 
 @Component({
   standalone: true,
@@ -52,11 +54,16 @@ import { MatAnchor } from '@angular/material/button';
     </main>
   `,
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   private readonly _shiftApiService = inject(ShyftApiService);
   private readonly _publicKey = injectPublicKey();
+  private readonly _connectionStore = inject(ConnectionStore);
 
   readonly balance = computedAsync(() =>
     this._shiftApiService.getBalance(this._publicKey()?.toBase58()),
   );
+
+  ngOnInit() {
+    this._connectionStore.setEndpoint(this._shiftApiService.getEndpoint());
+  }
 }

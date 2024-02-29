@@ -1,12 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { map, of } from 'rxjs';
+import { map, of, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ShyftApiService {
   private readonly _httpClient = inject(HttpClient);
-  private readonly _header = { 'x-api-key': 'my-api-key' };
-  private readonly _mint = '7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs'; /*Dirección de prueba del token Silly Dragon*/
+  private readonly _key = 'my-api-key';
+  private readonly _header = { 'x-api-key': this._key };
+  private readonly _mint ='7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs'; /*Dirección de prueba del token Silly Dragon*/
+
+  getEndpoint() {
+    const url = new URL('https://rpc.shyft.to');
+    url.searchParams.set('api_key', this._key);
+
+    return url.toString();
+  }
 
   getAccount(publicKey: string | undefined | null) {
     if (!publicKey) {
@@ -59,8 +67,25 @@ export class ShyftApiService {
           status: string;
           type: string;
           timestamp: string;
+          actions: any[];
         }[];
       }>(url.toString(), { headers: this._header })
-      .pipe(map((response) => response.result));
+      .pipe(
+        tap((response) => {
+          response.result.map((transaction) => {
+            if (transaction.type === 'TOKEN_TRANSFER') {
+              return {
+                amount: transaction.actions[0].info.amount,
+                status: transaction.status,
+                timestamp: transaction.timestamp,
+                type: transaction.type,
+              };
+            } else {
+              return transaction;
+            }
+          });
+        }),
+        map((response) => response.result),
+      );
   }
 }
