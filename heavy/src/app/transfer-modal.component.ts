@@ -27,7 +27,7 @@ export class TransferModalComponent {
     this._transactionSender
       .send(({ publicKey }) =>
         createTransferInstructions({
-          amount: payload.amount,
+          amount: payload.amount * 10 ** 9,
           mintAddress: '7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs',
           receiverAddress: payload.recieverAddress,
           senderAddress: publicKey.toBase58(),
@@ -36,7 +36,7 @@ export class TransferModalComponent {
         }),
       )
       .subscribe({
-        next: (signature) => console.log('Firma, ${signature}'),
+        next: (signature) => console.log(`Firma, ${signature}`),
         error: (error) => console.error('Error', error),
         complete: () => console.log('Transaccion completada'),
       });
