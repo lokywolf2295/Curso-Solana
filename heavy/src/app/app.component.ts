@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     const url = new URL('https://rpc.shyft.to');
 
-    url.searchParams.set('api_key', 'my-api-key');
+    url.searchParams.set('api_key', '2XQ90Z1OgK2oK3jZ');
 
     this._connectionStore.setEndpoint(url.toString());
   }

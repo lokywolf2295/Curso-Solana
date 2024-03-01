@@ -19,7 +19,7 @@ import { MatButton } from '@angular/material/button';
       @if (!account()) {
         <p class="text-center">Conecta tu wallet para ver tu balance.</p>
       } @else {
-        <div class="flex justify-center items-center gap-2">
+        <div class="flex justify-center items-center gap-2 mb-4">
           <p class="text-2xl">{{ account()?.info?.name }}</p>
         </div>
         <div class="flex justify-center items-center gap-2">
