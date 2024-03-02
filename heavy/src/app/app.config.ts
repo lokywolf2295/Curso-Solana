@@ -5,6 +5,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideWalletAdapter } from '@heavy-duty/wallet-adapter';
 import { provideHttpClient } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +13,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideWalletAdapter(),
     provideHttpClient(),
-    importProvidersFrom([MatDialogModule])
+    importProvidersFrom([MatDialogModule, MatSnackBarModule])
 ],
 };
